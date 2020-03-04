@@ -155,7 +155,7 @@
         text-align: center;
         line-height: 60rpx;
         font-size: 24rpx;
-        color: #24rpx;
+        /*color: #24rpx;*/
         color: #2AB8B5;
         font-weight: 500;
       }

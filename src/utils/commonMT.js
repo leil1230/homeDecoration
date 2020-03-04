@@ -118,34 +118,34 @@ class commonMT extends Base {
   }
   //获取用户信息并更新
   getUser(res,sCallBack,fCallBack){
-    let userInfo = res.detail.userInfo
-    if(userInfo){  //用户点了确定授权或者已经授权
-      let value = wx.getStorageSync('userInfo')
-      if(value){
-        sCallBack && sCallBack()
-        return false
-      } else {
-        let postdata = {
-          wechat_name: userInfo.nickName,
-          area: userInfo.country + userInfo.province + userInfo.city,
-          portrait: userInfo.avatarUrl,
-          encryptedData:res.detail.encryptedData,
-          iv:res.detail.iv,
-          versions: "vip5",
-        }
-        this._postUserInfo(postdata,()=>{
-          sCallBack && sCallBack()
-          wx.setStorageSync('userInfo', userInfo)
-        })
-      }
-    } else{
-      wx.showToast({
-        title: '需要您的授权才能继续使用哦~',
-        icon: 'none',
-        duration: 3000
-      })
-      fCallBack && fCallBack()
-    }
+    // let userInfo = res.detail.userInfo
+    // if(userInfo){  //用户点了确定授权或者已经授权
+    //   let value = wx.getStorageSync('userInfo')
+    //   if(value){
+    //     sCallBack && sCallBack()
+    //     return false
+    //   } else {
+    //     let postdata = {
+    //       wechat_name: userInfo.nickName,
+    //       area: userInfo.country + userInfo.province + userInfo.city,
+    //       portrait: userInfo.avatarUrl,
+    //       encryptedData:res.detail.encryptedData,
+    //       iv:res.detail.iv,
+    //       versions: "vip5",
+    //     }
+    //     this._postUserInfo(postdata,()=>{
+    //       sCallBack && sCallBack()
+    //       wx.setStorageSync('userInfo', userInfo)
+    //     })
+    //   }
+    // } else{
+    //   wx.showToast({
+    //     title: '需要您的授权才能继续使用哦~',
+    //     icon: 'none',
+    //     duration: 3000
+    //   })
+    //   fCallBack && fCallBack()
+    // }
   }
   // 更新用户数据到后端
   _postUserInfo(postdata, callback) {

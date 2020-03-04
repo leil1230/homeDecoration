@@ -96,7 +96,7 @@
       </view>
     </view>
   </view>
-  <login></login>
+  <!-- <login></login> -->
   <!-- 加载动画 -->
   <loading :load.sync="showContent"></loading>
 </template>
@@ -106,7 +106,7 @@
   import loading from '../../components/loading'
   import commonMixin from '../../mixins/commonWay'
   import api from '../../utils/commonMT.js'
-  import homeModel from './homeModel.js'
+  // import homeModel from './homeModel.js'
   import banner from '../../components/banner'
   import navTab from '../../components/navtab'
   import designShow from '../../components/designerShow'
@@ -127,8 +127,12 @@
     }
 
     data = {
-      showContent: false,
-      bannerImgs: [],
+      showContent: true,
+      bannerImgs: [
+        "http://tu.ossfiles.cn:9186/group2/M00/4D/72/rBgICV1-EIWAb-f6AAF59IlTwVg441.jpg",
+        "http://tyunfile.71360.com/UpLoadFile/2019/7/10/17/636983759069419584_hzqz_2738947.jpg",
+        "http://pic.ossfiles.cn:9186/group2/M00/4D/73/rBgICV1-EIaAX31TAAExm7NUIeE836.jpg"
+      ],
       navTabData: [{classify_img:'images/navIcon1.png',classify_name:'在线咨询'},
                   {classify_img:'images/navIcon4.png',classify_name:'户型设计'},
                   {classify_img:'images/navIcon3.png',classify_name:'免费量房'},
@@ -187,25 +191,25 @@
       this._getNearByData()
     }
     _loadData(){
-      homeModel.getHomeData({},(res)=>{
-        wx.stopPullDownRefresh()
-        if(res.error === 0){
-          this.bannerImgs = res.data.carousel_index
-          // this.navTabData = res.data.category_index
-          this.caseData = res.data.case_index.cases
-          this.designersData = res.data.designer_index
-          this.fixedData1 = res.data.field
-          this.seeNum = res.data.view_num
-          // this.$apply()
-          if(this.seeNum>=10000){
-            this.seeNum = (this.seeNum/10000).toFixed(1) + "万"
-          }
-          this.showContent = true
-          this.$apply()
-        } else {
-          api.showTips(res.msg)
-        }
-      })
+      // homeModel.getHomeData({},(res)=>{
+      //   wx.stopPullDownRefresh()
+      //   if(res.error === 0){
+      //     this.bannerImgs = res.data.carousel_index
+      //     // this.navTabData = res.data.category_index
+      //     this.caseData = res.data.case_index.cases
+      //     this.designersData = res.data.designer_index
+      //     this.fixedData1 = res.data.field
+      //     this.seeNum = res.data.view_num
+      //     // this.$apply()
+      //     if(this.seeNum>=10000){
+      //       this.seeNum = (this.seeNum/10000).toFixed(1) + "万"
+      //     }
+      //     this.showContent = true
+      //     this.$apply()
+      //   } else {
+      //     api.showTips(res.msg)
+      //   }
+      // })
     }
     _getNearByData(tips1,tips2){
       api.getGeoAndUserInfo((res)=>{
@@ -231,17 +235,17 @@
           })
         }
         tips1 && api.showTips(tips1)
-        homeModel.getNearbyData({log_lat: logLat},(resData)=>{
-          wx.stopPullDownRefresh()  
-          if(resData.error === 0){
-            tips2 && api.showTips(tips2)
-            this.fixedData2 = resData.data.field
-            this.nearbyData = resData.data.data
-            this.$apply()
-          } else {
-            api.showTips(resData.msg)
-          }
-        })
+        // homeModel.getNearbyData({log_lat: logLat},(resData)=>{
+        //   wx.stopPullDownRefresh()  
+        //   if(resData.error === 0){
+        //     tips2 && api.showTips(tips2)
+        //     this.fixedData2 = resData.data.field
+        //     this.nearbyData = resData.data.data
+        //     this.$apply()
+        //   } else {
+        //     api.showTips(resData.msg)
+        //   }
+        // })
       })
     }
     onPullDownRefresh(){
