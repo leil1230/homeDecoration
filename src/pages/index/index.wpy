@@ -98,6 +98,7 @@
   </view>
   <!-- <login></login> -->
   <!-- 加载动画 -->
+  <button bindtap="obtainUserInfo">点击获取用户信息</button>
   <loading :load.sync="showContent"></loading>
 </template>
 
@@ -107,6 +108,7 @@
   import commonMixin from '../../mixins/commonWay'
   import api from '../../utils/commonMT.js'
   // import homeModel from './homeModel.js'
+  import userUtils from '../../utils/userUtils.js'
   import banner from '../../components/banner'
   import navTab from '../../components/navtab'
   import designShow from '../../components/designerShow'
@@ -180,7 +182,22 @@
       },
       toWorksDetail(id){
         api.navTo('../../designerCenter/worksDetail',{id: id})
+      },
+
+      // 获取用户信息
+      obtainUserInfo() {
+        userUtils.checkUserInfoScope()
+          .then(() => {
+            userUtils.obtainUserInfo()
+              .then(res => {
+                console.log(res);
+              });
+          }).catch(err => {
+            console.log(err);
+          });
       }
+
+
     }
 
     events = {
