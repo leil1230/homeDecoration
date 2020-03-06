@@ -96,7 +96,7 @@
       </view>
     </view>
   </view>
-  <!-- <login></login> -->
+  <login wx:if="{{showLogin}}"></login>
   <!-- 加载动画 -->
   <button bindtap="obtainUserInfo">点击获取用户信息</button>
   <loading :load.sync="showContent"></loading>
@@ -145,7 +145,8 @@
       fixedData2: '',
       nearbyData: '',
       isLocation: false,
-      seeNum: 0
+      seeNum: 0,
+      showLogin: false
     }
 
     mixins = [commonMixin]
@@ -186,22 +187,28 @@
 
       // 获取用户信息
       obtainUserInfo() {
-        userUtils.checkUserInfoScope()
-          .then(() => {
-            userUtils.obtainUserInfo()
-              .then(res => {
-                console.log(res);
-              });
-          }).catch(err => {
-            console.log(err);
-          });
+        userUtils.obtainUserInfo()
+        	.then(userInfo => {
+        		console.log('form:API')
+        		console.log(userInfo);
+        	}).catch(err => {
+        		this.showLogin = true;
+      			this.$apply();
+        	})
       }
 
 
     }
 
     events = {
-      
+    	'login-event': (userInfo, $event) => {
+    		console.log('from:界面')
+    		console.log(userInfo);
+    		// console.log($event);
+    		wx.hideLoading();
+    		this.showLogin = false;
+    		this.$apply();
+        }
     }
     onLoad() {
       this._loadData()

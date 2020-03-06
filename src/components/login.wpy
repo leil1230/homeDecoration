@@ -1,22 +1,22 @@
 <template>
-  <button wx:if="{{showLoginBtn}}" class="getUserInfoBtn" open-type="getUserInfo" bindgetuserinfo="getUserInfo"></button>
-  <!-- <view class="loginBox">
+  <view class="loginBox">
     <view class="loginbgp"></view>
     <view class="userPic">
       <open-data type="userAvatarUrl"></open-data>
     </view>
-    <view class="loginBtn">快速登录</view>
+    <button class="loginBtn" wx:if="{{canIUse}}" open-type="getUserInfo" bindgetuserinfo="getUserInfo">授权登录</button>
+    <view wx:else>请升级微信版本</view>
     <view class="loginBtn outer"></view>
-  </view> -->
+  </view>
 </template>
 <script>
   import wepy from 'wepy'
-  import api from '../utils/commonMT.js'
+  import userUtils from '../utils/userUtils.js'
   export default class login extends wepy.component {
     props = {
     }
     data = {
-      showLoginBtn: true
+      canIUse: wx.canIUse('button.open-type.getUserInfo')
     }
     computed = {
       
@@ -26,23 +26,16 @@
     }
     methods = {
       getUserInfo(res){
-        wx.showLoading({
-          title: '登录中...'
-        })
-        api.getUser(res,()=>{
-          wx.hideLoading()
-          api.showTips("登录成功")
-          this.showLoginBtn = false
-          this.$apply()
-        })
-      }
+        wx.showLoading("登陆中");
+        // console.log(res);
+        let userInfo = res.detail.userInfo
+        userUtils.storeUserInfo(userInfo);
+        this.$emit('login-event', userInfo);
+      },
+
     }
     onLoad(){
-      let info = wx.getStorageSync('userInfo')
-      if(info){
-        this.showLoginBtn = false
-        this.$apply()
-      }
+
     }
   }
 </script>
@@ -74,6 +67,7 @@
       top:200rpx;
       box-shadow: 0 0 30rpx rgba(3,28,57,.4);
     }
+
     @keyframes bgpMove{
       from{
       }
