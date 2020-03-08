@@ -24,6 +24,9 @@ class Worksite extends Base {
       data: {
       },
       sCallback(ResData) {
+        console.log("===========返回的分类信息==================");
+        console.log(ResData);
+        console.log("==========================================");
         callback && callback(ResData)
       }
     }

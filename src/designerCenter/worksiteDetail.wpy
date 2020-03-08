@@ -6,8 +6,8 @@
       <view class="locationBox-left pre-initShow {{showContent?'initShow':''}}" style="transition: .5s .3s">
         <text class="addressInfo">{{indexData.address}}</text>
         <text class="address-text" wx:if="{{indexData.distance}}">{{indexData.distance}}Km</text>
-        <button class="addresBtn" open-type="openSetting" bindopensetting="openSetting" wx:if="{{!indexData.distance && indexData.log_lat}}">定位失败，重新授权</button>
-        <button class="addresBtn" wx:if="{{!indexData.log_lat}}">未设置位置信息</button>
+        <!-- <button class="addresBtn" open-type="openSetting" bindopensetting="openSetting" wx:if="{{!indexData.distance && indexData.log_lat}}">定位失败，重新授权</button>
+        <button class="addresBtn" wx:if="{{!indexData.log_lat}}">未设置位置信息</button> -->
       </view>
       <image src="./images/location.png" mode="widthFix" class="locationIcon pre-initShow {{showContent?'initShow':''}}" style="transition: .5s .5s" @tap="openMap"></image>
     </view>
@@ -33,7 +33,7 @@
       <text class="designTxt">请他帮我设计</text>
     </view>
   </view>
-  <login></login>
+  <login wx:if="{{showLogin}}"></login>
   <!-- 加载动画 -->
   <loading :load.sync="showContent"></loading>
 </template>
@@ -59,9 +59,10 @@
     }
 
     data = {
-      showContent: false,
+      showContent: true,
       id: '',
-      indexData: ''
+      indexData: '',
+      showLogin: false
     }
 
     computed = {

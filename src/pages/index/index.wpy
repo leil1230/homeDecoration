@@ -164,13 +164,14 @@
           api.navTo('/pages/workSite/index')
         }
       },
-      openSetting(res){
-        if(res.detail.authSetting['scope.userLocation']){
-          this._getNearByData('重新定位中...','定位成功')
-        } else {
-          api.showTips('授权失败')
-        }
-      },
+      // 获取定位先注释掉
+      // openSetting(res){
+      //   if(res.detail.authSetting['scope.userLocation']){
+      //     this._getNearByData('重新定位中...','定位成功')
+      //   } else {
+      //     api.showTips('授权失败')
+      //   }
+      // },
       toDesignDetail(id){
         api.navTo('../../designerCenter/index',{id:id})
       },
@@ -274,7 +275,7 @@
     }
     onPullDownRefresh(){
       this._loadData()
-      this._getNearByData()
+      // this._getNearByData()
     }
     onShow(){
     }

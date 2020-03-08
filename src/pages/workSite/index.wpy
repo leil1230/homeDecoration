@@ -9,7 +9,7 @@
     <Empty :load.sync="isProEmpty" emptyTips="暂无项目"></Empty>
     <view style="height: 1px"></view>
   </view>
-  <login></login>
+  <login wx:if="{{showLogin}}"></login>
   <!-- 加载动画 -->
   <loading :load.sync="showContent"></loading>
 </template>
@@ -24,6 +24,7 @@
   import WorksiteModel from './workSiteModel.js'
   import Empty from '../../components/empty'
   import login from '../../components/login'
+  import leilRequestUtils from '../../utils/leilRequestUtils.js'
   export default class Index extends wepy.page {
     config = {
       navigationBarBackgroundColor: "#fff",
@@ -45,7 +46,8 @@
       workSiteData: [],
       classifyData: [],
       pageNum: 1,
-      isLoadall: false
+      isLoadall: false,
+      showLogin: false
     }
 
     mixins = [commonMixin]
@@ -61,7 +63,6 @@
     }
 
     methods = {
-      
     }
 
     events = {
@@ -82,6 +83,9 @@
       this._loadData()
     }
     _loadData(){
+      this.getCatData();
+
+
       let worksiteId = wx.getStorageSync('worksiteId')
       if(worksiteId && this.showContent){
         wx.showLoading({
@@ -136,6 +140,9 @@
               }
             }
           }
+          console.log('=============格式化后的分类列表================');
+          console.log(this.classifyData);
+          console.log('==============================================');
           this.$apply()
         } else {
           api.showTips(res.mag)
@@ -194,6 +201,20 @@
         })
       }
     }
+
+    getCatData() {
+      leilRequestUtils.request({
+          url: '/cat/tree',
+          method: 'GET',
+          data: {},
+        }, res => {
+          console.log('自定义接口数据');
+          console.log(res);
+          console.log('&&&&&&&&&&&&&&&&&&&&&');
+        })
+    }
+
+
   }
 </script>
 <style lang="less">

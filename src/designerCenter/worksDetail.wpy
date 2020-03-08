@@ -53,7 +53,7 @@
     }
 
     data = {
-      showContent: false,
+      showContent: true,
       id: '',
       indexData: ''
     }
